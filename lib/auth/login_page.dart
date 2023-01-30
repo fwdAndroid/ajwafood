@@ -7,6 +7,7 @@ import 'package:ajwafood/widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -156,12 +157,45 @@ class _ImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Center(
-        child: SvgPicture.asset(
-          "assets/svg/login.svg",
-          width: 647,
-          height: 602,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+              child: AnimatedTextKit(
+            animatedTexts: [
+              RotateAnimatedText(
+                'Welcome To',
+                textStyle: const TextStyle(
+                  fontSize: 82.0,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+            totalRepeatCount: 4,
+            pause: const Duration(milliseconds: 1000),
+            displayFullTextOnTap: true,
+            stopPauseOnTap: true,
+          )),
+          Center(
+              child: AnimatedTextKit(
+            animatedTexts: [
+              WavyAnimatedText(
+                'Ajwa Food',
+                textStyle: const TextStyle(
+                  letterSpacing: 1,
+                  fontSize: 62.0,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+            totalRepeatCount: 4,
+            pause: const Duration(milliseconds: 1000),
+            displayFullTextOnTap: true,
+            stopPauseOnTap: true,
+          )),
+        ],
       ),
     );
   }

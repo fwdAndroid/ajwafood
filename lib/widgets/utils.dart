@@ -1,3 +1,4 @@
+import 'package:ajwafood/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -30,10 +31,9 @@ class Customdialog {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  LoadingAnimationWidget.twistingDots(
-                    leftDotColor: const Color(0xFF1A1A3F),
-                    rightDotColor: const Color(0xFFEA3799),
-                    size: 200,
+                  LoadingAnimationWidget.bouncingBall(
+                    color: AppColors.primary,
+                    size: 100,
                   ),
                   SizedBox(
                     height: 10,
