@@ -87,7 +87,9 @@ class DatabaseMethods {
 
   //Add Food
   Future<String> addFood(
-      {required Uint8List file,
+      {
+
+      // required Uint8List file,
       required price,
       required String uid,
       required String name,
@@ -95,8 +97,8 @@ class DatabaseMethods {
       required menu}) async {
     String res = "Some Error";
     try {
-      String photoUrl =
-          await StorageMethods().uploadImageToStorage("foodImages", file, true);
+      // String photoUrl =
+      //     await StorageMethods().uploadImageToStorage("foodImages", file, true);
 
       String postId = Uuid().v1();
       FoodModel postModel = FoodModel(
@@ -105,7 +107,7 @@ class DatabaseMethods {
         foodCategory: foodCategory,
         menu: menu,
         foodName: name,
-        image: photoUrl,
+        // image: photoUrl,
       );
 
       ///Uploading Post To Firebase

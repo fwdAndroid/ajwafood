@@ -4,7 +4,7 @@ class FoodModel {
   String uuid;
   String foodName;
   String foodCategory;
-  String image;
+  // String image;
   String price;
   String menu;
 
@@ -14,7 +14,7 @@ class FoodModel {
     required this.foodCategory,
     required this.foodName,
     required this.menu,
-    required this.image,
+    // required this.image,
   });
 
   ///Converting OBject Stringo Json Object
@@ -23,7 +23,7 @@ class FoodModel {
         'uuid': uuid,
         'foodCategory': foodCategory,
         'menu': menu,
-        'image': image,
+        // 'image': image,
         'price': price,
       };
 
@@ -32,7 +32,7 @@ class FoodModel {
     var snapshot = snaps.data() as Map<String, dynamic>;
 
     return FoodModel(
-        image: snapshot['image'],
+        // image: snapshot['image'],
         menu: snapshot['menu'],
         foodCategory: snapshot['foodCategory'],
         uuid: snapshot['uuid'],

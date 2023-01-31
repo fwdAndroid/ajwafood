@@ -7,11 +7,14 @@ import 'package:ajwafood/widgets/exc_button.dart';
 import 'package:ajwafood/widgets/input_text.dart';
 import 'package:ajwafood/widgets/sidebar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ajwafood/widgets/utils.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:mime_type/mime_type.dart';
 import 'package:uuid/uuid.dart';
 
 class AddFoodMenu extends StatefulWidget {
@@ -26,7 +29,7 @@ class _AddFoodMenuState extends State<AddFoodMenu> {
   TextEditingController foodCategory = TextEditingController();
   TextEditingController menu = TextEditingController();
   TextEditingController price = TextEditingController();
-  var _file;
+  Uint8List? _file;
   bool _isLoading = false;
   final ImagePicker _picker = ImagePicker();
   File? imageUrl;
@@ -52,33 +55,33 @@ class _AddFoodMenuState extends State<AddFoodMenu> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: InkWell(
-                onTap: () => selectImage(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 374,
-                    height: 100,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _file != null
-                            ? CircleAvatar(
-                                radius: 45,
-                                backgroundImage: MemoryImage(_file!))
-                            : CircleAvatar(
-                                radius: 45,
-                                backgroundImage: AssetImage(
-                                  "assets/png/cam.png",
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: InkWell(
+            //     onTap: () => selectImage(),
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child: Container(
+            //         width: 374,
+            //         height: 100,
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             _file != null
+            //                 ? CircleAvatar(
+            //                     radius: 45,
+            //                     backgroundImage: MemoryImage(_file!))
+            //                 : CircleAvatar(
+            //                     radius: 45,
+            //                     backgroundImage: AssetImage(
+            //                       "assets/png/cam.png",
+            //                     ),
+            //                   ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 20,
             ),
@@ -212,7 +215,7 @@ class _AddFoodMenuState extends State<AddFoodMenu> {
         foodCategory: foodCategory.text,
         price: price.text,
         menu: menu.text,
-        file: _file,
+        // file: _file!,
         uid: uid);
 
     print(rse);
@@ -236,14 +239,7 @@ class _AddFoodMenuState extends State<AddFoodMenu> {
     });
   }
 
-  void getImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      imageUrl = File(image!.path);
-    });
-  }
-
-  static pickImage(ImageSource source) async {
+  pickImage(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: source);
 

@@ -83,7 +83,7 @@ class _FoodManagmentState extends State<FoodManagment>
         ],
       ),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("hotel").snapshots(),
+          stream: FirebaseFirestore.instance.collection("foods").snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
@@ -140,12 +140,12 @@ class _FoodManagmentState extends State<FoodManagment>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Email: ',
+                                  'foodCategory: ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(snap['email']),
+                                Text(snap['foodCategory']),
                               ],
                             ),
                             SizedBox(
@@ -155,12 +155,12 @@ class _FoodManagmentState extends State<FoodManagment>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Name: ',
+                                  'Food Name: ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(snap['name']),
+                                Text(snap['foodName']),
                               ],
                             ),
                             SizedBox(
@@ -170,12 +170,12 @@ class _FoodManagmentState extends State<FoodManagment>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Pass: ',
+                                  'Menu: ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(snap['password']),
+                                Text(snap['menu']),
                               ],
                             ),
                             SizedBox(
@@ -185,12 +185,12 @@ class _FoodManagmentState extends State<FoodManagment>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Location:',
+                                  'Price:',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(snap['area']),
+                                Text(snap['price']),
                               ],
                             ),
                             SizedBox(
@@ -262,7 +262,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          "Edit Hotel Name",
+                                                          "Edit Food Name",
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -271,7 +271,8 @@ class _FoodManagmentState extends State<FoodManagment>
                                                         ),
                                                       ),
                                                       InputText(
-                                                        labelText: snap['name'],
+                                                        labelText:
+                                                            snap['foodName'],
                                                         controller:
                                                             _nameController,
                                                         keyboardType:
@@ -291,7 +292,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          "Edit Hotel Location",
+                                                          "Edit Food Price",
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -302,7 +303,8 @@ class _FoodManagmentState extends State<FoodManagment>
                                                       InputText(
                                                         controller:
                                                             _areaContoller,
-                                                        labelText: snap['area'],
+                                                        labelText:
+                                                            snap['price'],
                                                         keyboardType:
                                                             TextInputType
                                                                 .visiblePassword,
@@ -322,13 +324,13 @@ class _FoodManagmentState extends State<FoodManagment>
                                                           FirebaseFirestore
                                                               .instance
                                                               .collection(
-                                                                  "hotel")
+                                                                  "foods")
                                                               .doc(snap['uuid'])
                                                               .update({
-                                                            "area":
+                                                            "price":
                                                                 _areaContoller
                                                                     .text,
-                                                            "name":
+                                                            "foodName":
                                                                 _nameController
                                                                     .text
                                                           });
@@ -341,7 +343,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                             duration: Duration(
                                                                 seconds: 5),
                                                             content: Text(
-                                                              " Hotel is updated successfully",
+                                                              " Food Updated successfully",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white),
@@ -416,7 +418,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                               AnimatedTextKit(
                                                         animatedTexts: [
                                                           WavyAnimatedText(
-                                                            'Are you sure to delete your hotel',
+                                                            'Are you sure to delete your food Item',
                                                             textStyle:
                                                                 const TextStyle(
                                                               fontSize: 15.0,
@@ -441,7 +443,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                           FirebaseFirestore
                                                               .instance
                                                               .collection(
-                                                                  "hotel")
+                                                                  "foods")
                                                               .doc(snap['uuid'])
                                                               .delete();
                                                           ScaffoldMessenger.of(
@@ -453,7 +455,7 @@ class _FoodManagmentState extends State<FoodManagment>
                                                             duration: Duration(
                                                                 seconds: 5),
                                                             content: Text(
-                                                              "Resturant is deleted successfully",
+                                                              "Food Item is deleted successfully",
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white),

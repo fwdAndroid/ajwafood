@@ -40,6 +40,26 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2ofAW66xIqnE-HmepCAwPiBPw4apkdPY",
+      authDomain: "ajwafood-3697c.firebaseapp.com",
+      projectId: "ajwafood-3697c",
+      storageBucket: "ajwafood-3697c.appspot.com",
+      messagingSenderId: "303175466090",
+      appId: "1:303175466090:web:b3ce48e48c8f0ad25f9e13",
+      measurementId: "G-59G9QCZT5Z"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  
+  <script src="main.dart.js" type="application/javascript"></script>
+
+
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
