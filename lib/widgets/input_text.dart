@@ -1,6 +1,7 @@
 import 'package:ajwafood/widgets/colors.dart';
 import 'package:ajwafood/widgets/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
 
 class InputText extends StatefulWidget {
   final String? labelText;
@@ -38,6 +39,7 @@ class InputText extends StatefulWidget {
     this.initialValue,
     this.enabled = true,
     this.controller,
+    List<TextInputFormatter>? inputFormatters,
   });
 
   @override
