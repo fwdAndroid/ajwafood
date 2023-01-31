@@ -1,4 +1,9 @@
+import 'package:ajwafood/dashboard_screens/food_management.dart';
+import 'package:ajwafood/dashboard_screens/hotel_management.dart';
+import 'package:ajwafood/dashboard_screens/payment_management.dart';
+import 'package:ajwafood/dashboard_screens/resturant_managment.dart';
 import 'package:ajwafood/widgets/colors.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sidebarx/sidebarx.dart';
@@ -104,7 +109,7 @@ class ExampleSidebarX extends StatelessWidget {
         ),
       ),
       extendedTheme: const SidebarXTheme(
-        width: 200,
+        width: 230,
         decoration: BoxDecoration(
           color: canvasColor,
         ),
@@ -112,39 +117,48 @@ class ExampleSidebarX extends StatelessWidget {
       headerBuilder: (context, extended) {
         return SizedBox(
           height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/png/splash.png'),
-          ),
+          child: Center(
+              child: AnimatedTextKit(
+            animatedTexts: [
+              WavyAnimatedText(
+                'Ajwa Food',
+                textStyle: const TextStyle(
+                  fontSize: 22.0,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+            totalRepeatCount: 4,
+            pause: const Duration(milliseconds: 1000),
+            displayFullTextOnTap: true,
+            stopPauseOnTap: true,
+          )),
         );
       },
+      footerItems: [
+        SidebarXItem(
+          icon: Icons.logout,
+          label: 'Log Out',
+        ),
+      ],
       items: [
         SidebarXItem(
           icon: Icons.business,
-          label: 'Business Manager',
+          label: 'Resturant Management',
         ),
         const SidebarXItem(
           icon: Icons.business,
-          label: 'Regional Manager',
+          label: 'Hotel Management',
         ),
         const SidebarXItem(
           icon: Icons.business_center,
-          label: 'Zonal Manager',
+          label: 'Food Management',
         ),
         const SidebarXItem(
           icon: Icons.looks,
-          label: 'Area Manager',
+          label: 'Payment Records',
         ),
-        const SidebarXItem(
-          icon: Icons.branding_watermark,
-          label: 'Territory Manager',
-        ),
-      ],
-      footerItems: [
-        const SidebarXItem(icon: Icons.sailing, label: 'Sales Officer'),
-        SidebarXItem(icon: Icons.disc_full_outlined, label: 'Distributor'),
-        SidebarXItem(icon: Icons.payment, label: 'Retailers'),
-        SidebarXItem(icon: Icons.shop, label: 'Product'),
       ],
     );
   }
@@ -166,24 +180,16 @@ class _ScreensExample extends StatelessWidget {
       builder: (context, child) {
         switch (controller.selectedIndex) {
           case 0:
-            return const Text("Fawad");
+            return const ResturantManagement();
           case 1:
-            return const Text("asd");
+            return const HotelManagmeent();
           case 2:
-            return const Text("assda");
+            return const FoodManagment();
           case 3:
-            return const Text("asd");
+            return const PaymentManagement();
           case 4:
             return const Text("asd");
 
-          case 5:
-            return const Text("ads");
-          case 6:
-            return const Text("asds");
-          case 7:
-            return const Text("asds");
-          case 8:
-            return const Text("asd");
           default:
             return Text(
               'Not found page',
@@ -196,7 +202,7 @@ class _ScreensExample extends StatelessWidget {
 }
 
 const primaryColor = Color(0xFF685BFF);
-const canvasColor = AppColors.primary;
+const canvasColor = Color(0xFF464667);
 const scaffoldBackgroundColor = Color(0xFF464667);
 const accentCanvasColor = Color(0xFF3E3E61);
 const white = Colors.white;
