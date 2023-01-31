@@ -180,7 +180,7 @@ class _ScreensExample extends StatelessWidget {
       builder: (context, child) {
         switch (controller.selectedIndex) {
           case 0:
-            return const ResturantManagement();
+            return ResturantManagement();
           case 1:
             return const HotelManagmeent();
           case 2:

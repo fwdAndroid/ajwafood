@@ -134,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  floating_action_bubble_custom:
+    dependency: "direct main"
+    description:
+      name: floating_action_bubble_custom
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+2"
   flutter:
     dependency: "direct main"
     description: flutter
