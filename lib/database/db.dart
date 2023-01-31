@@ -45,6 +45,42 @@ class DatabaseMethods {
     return res;
   }
 
+  Future<String> addHotel({
+    required String email,
+    required String name,
+    required String area,
+    required String type,
+    required String password,
+  }) async {
+    String res = 'Some error occured';
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        UserCredential cred = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        //Add User to the database with modal
+
+        Models userModel = Models(
+          type: type,
+          name: name,
+          area: area,
+          uuid: cred.user!.uid,
+          email: email,
+          password: password,
+        );
+        await firebaseFirestore
+            .collection('hotel')
+            .doc(cred.user!.uid)
+            .set(userModel.toJson());
+
+        res = 'success';
+      }
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
   //Add Product
   // Future<String> addProduct({
   //   required String dimension,
