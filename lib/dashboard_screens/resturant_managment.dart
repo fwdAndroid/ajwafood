@@ -1,5 +1,7 @@
 import 'package:ajwafood/add_forms/add_resturant.dart';
 import 'package:ajwafood/widgets/colors.dart';
+import 'package:ajwafood/widgets/input_text.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:floating_action_bubble_custom/floating_action_bubble_custom.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,8 @@ class _ResturantManagementState extends State<ResturantManagement>
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _nameController = TextEditingController();
+    TextEditingController _areaContoller = TextEditingController();
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
 
@@ -83,7 +87,22 @@ class _ResturantManagementState extends State<ResturantManagement>
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return AnimatedTextKit(
+                animatedTexts: [
+                  WavyAnimatedText(
+                    'No Items Yet  Added',
+                    textStyle: const TextStyle(
+                      fontSize: 22.0,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+                totalRepeatCount: 4,
+                pause: const Duration(milliseconds: 1000),
+                displayFullTextOnTap: true,
+                stopPauseOnTap: true,
+              );
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -166,7 +185,7 @@ class _ResturantManagementState extends State<ResturantManagement>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Area: ',
+                                  'Location:',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
@@ -180,16 +199,302 @@ class _ResturantManagementState extends State<ResturantManagement>
                             SizedBox(
                               height: 20,
                             ),
-                            TextButton(
-                              clipBehavior: Clip.antiAlias,
-                              onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (builder) =>
-                                //             BusinessView(data: snap)));
-                              },
-                              child: Text("View"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                MaterialButton(
+                                  color: Colors.green,
+                                  elevation: 6,
+                                  shape: StadiumBorder(),
+                                  onPressed: () {
+                                    showGeneralDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierLabel:
+                                            MaterialLocalizations.of(context)
+                                                .modalBarrierDismissLabel,
+                                        barrierColor: Colors.black45,
+                                        transitionDuration:
+                                            const Duration(milliseconds: 200),
+                                        pageBuilder: (BuildContext buildContext,
+                                            Animation animation,
+                                            Animation secondaryAnimation) {
+                                          return Center(
+                                            child: Material(
+                                              child: Container(
+                                                width: 500,
+                                                height: 300,
+                                                padding: EdgeInsets.all(20),
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Center(
+                                                          child:
+                                                              AnimatedTextKit(
+                                                        animatedTexts: [
+                                                          WavyAnimatedText(
+                                                            'Kindly Fill out all field to update the data',
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: AppColors
+                                                                  .primary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                        totalRepeatCount: 4,
+                                                        pause: const Duration(
+                                                            milliseconds: 1000),
+                                                        displayFullTextOnTap:
+                                                            true,
+                                                        stopPauseOnTap: true,
+                                                      )),
+                                                      const SizedBox(height: 9),
+                                                      const Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Edit Resturant Name",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 16),
+                                                        ),
+                                                      ),
+                                                      InputText(
+                                                        labelText: snap['name'],
+                                                        controller:
+                                                            _nameController,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .visiblePassword,
+                                                        onChanged: (value) {},
+                                                        onSaved: (val) {},
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .done,
+                                                        isPassword: false,
+                                                        enabled: true,
+                                                      ),
+                                                      const SizedBox(height: 9),
+                                                      const SizedBox(height: 9),
+                                                      const Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Edit Resturant Location",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 16),
+                                                        ),
+                                                      ),
+                                                      InputText(
+                                                        controller:
+                                                            _areaContoller,
+                                                        labelText: snap['area'],
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .visiblePassword,
+                                                        onChanged: (value) {},
+                                                        onSaved: (val) {},
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .done,
+                                                        isPassword: false,
+                                                        enabled: true,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  "resturant")
+                                                              .doc(snap['uuid'])
+                                                              .update({
+                                                            "area":
+                                                                _areaContoller
+                                                                    .text,
+                                                            "name":
+                                                                _nameController
+                                                                    .text
+                                                          });
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                                  SnackBar(
+                                                            backgroundColor:
+                                                                Colors.blue,
+                                                            duration: Duration(
+                                                                seconds: 5),
+                                                            content: Text(
+                                                              "snap['name'] profile is updated successfully",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ));
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text(
+                                                          "Save",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                                shape:
+                                                                    StadiumBorder(),
+                                                                fixedSize: Size(
+                                                                    300, 40)),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: Text(
+                                    "Update",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                MaterialButton(
+                                  onPressed: () {
+                                    showGeneralDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierLabel:
+                                            MaterialLocalizations.of(context)
+                                                .modalBarrierDismissLabel,
+                                        barrierColor: Colors.black45,
+                                        transitionDuration:
+                                            const Duration(milliseconds: 200),
+                                        pageBuilder: (BuildContext buildContext,
+                                            Animation animation,
+                                            Animation secondaryAnimation) {
+                                          return Center(
+                                            child: Material(
+                                              child: Container(
+                                                width: 300,
+                                                height: 200,
+                                                padding: EdgeInsets.all(20),
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Center(
+                                                          child:
+                                                              AnimatedTextKit(
+                                                        animatedTexts: [
+                                                          WavyAnimatedText(
+                                                            'Are you sure to delete your profile',
+                                                            textStyle:
+                                                                const TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: AppColors
+                                                                  .primary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                        totalRepeatCount: 4,
+                                                        pause: const Duration(
+                                                            milliseconds: 1000),
+                                                        displayFullTextOnTap:
+                                                            true,
+                                                        stopPauseOnTap: true,
+                                                      )),
+                                                      const SizedBox(height: 9),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  "resturant")
+                                                              .doc(snap['uuid'])
+                                                              .delete();
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                                  SnackBar(
+                                                            backgroundColor:
+                                                                Colors.blue,
+                                                            duration: Duration(
+                                                                seconds: 5),
+                                                            content: Text(
+                                                              "Resturant is deleted successfully",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ));
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text(
+                                                          "Delete",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                                shape:
+                                                                    StadiumBorder(),
+                                                                fixedSize: Size(
+                                                                    300, 40)),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  color: Colors.red,
+                                  elevation: 6,
+                                  shape: StadiumBorder(),
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             )
                           ],
                         ),
