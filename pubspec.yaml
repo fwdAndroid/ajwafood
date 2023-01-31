@@ -35,11 +35,13 @@ dependencies:
   email_validator: ^2.1.17
   firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
+  firebase_storage: ^11.0.10
   floating_action_bubble_custom: ^1.0.0+2
   flutter:
     sdk: flutter
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.1.6
+  image_picker: ^0.8.6+1
   loading_animation_widget: ^1.2.0+4
   provider: ^6.0.5
   sidebarx: ^0.14.0
