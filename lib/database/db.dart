@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:ajwafood/database/storage.dart';
+import 'package:ajwafood/models/food_model.dart';
 import 'package:ajwafood/models/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,35 +85,38 @@ class DatabaseMethods {
     return res;
   }
 
-  //Add Product
-  // Future<String> addProduct({
-  //   required String dimension,
-  //   required String uuid,
-  //   required String productname,
-  //   required String pcs,
-  //   required String rate,
-  // }) async {
-  //   String res = 'Some error occured';
+  //Add Food
+  Future<String> addFood(
+      {required Uint8List file,
+      required price,
+      required String uid,
+      required String name,
+      required foodCategory,
+      required menu}) async {
+    String res = "Some Error";
+    try {
+      String photoUrl =
+          await StorageMethods().uploadImageToStorage("foodImages", file, true);
 
-  //   try {
-  //     //Add User to the database with modal
-  //     String postId = Uuid().v1();
+      String postId = Uuid().v1();
+      FoodModel postModel = FoodModel(
+        price: price,
+        uuid: uid,
+        foodCategory: foodCategory,
+        menu: menu,
+        foodName: name,
+        image: photoUrl,
+      );
 
-  //     ProductModels userModel = ProductModels(
-  //         productname: productname,
-  //         pcs: pcs,
-  //         uuid: postId,
-  //         dimensions: dimension,
-  //         rate: rate);
-  //     await FirebaseFirestore.instance
-  //         .collection('products')
-  //         .doc(postId)
-  //         .set(userModel.toJson());
-
-  //     res = 'success';
-  //   } catch (e) {
-  //     res = e.toString();
-  //   }
-  //   return res;
-  // }
+      ///Uploading Post To Firebase
+      FirebaseFirestore.instance
+          .collection('foods')
+          .doc(postId)
+          .set(postModel.toJson());
+      res = 'Sucessfully Uploaded in Firebase';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
 }
